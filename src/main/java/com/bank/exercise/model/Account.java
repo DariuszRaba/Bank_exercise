@@ -14,7 +14,7 @@ public abstract class Account {
         this.accAmount = BigDecimal.ZERO;
     }
 
-    protected boolean addAmount(BigDecimal amount){
+     public boolean addAmount(BigDecimal amount){
         this.accAmount = accAmount.add(amount);
         return true;
     }

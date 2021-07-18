@@ -12,9 +12,11 @@ public class UserAccount extends Account {
         this.subAccountUSD = new SubAccount(Currency.USD);
     }
 
-    public void addToSubAccount(BigDecimal amount) {
+    public boolean addToSubAccount(BigDecimal amount) {
+        if(this.accAmount.compareTo(amount) < 0) return false;
         this.accAmount = accAmount.subtract(amount);
         this.subAccountPLN.accAmount = subAccountPLN.accAmount.add(amount);
+        return true;
     }
 
     public boolean withdrawFromSubAccount(BigDecimal amount) {
