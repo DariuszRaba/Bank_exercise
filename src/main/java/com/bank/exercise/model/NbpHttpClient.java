@@ -15,9 +15,7 @@ import java.net.http.HttpResponse;
 
 @Service
 public class NbpHttpClient {
-    private static final String NBP_API_URI = "http://api.nbp.pl/api/exchangerates/rates/c/%s/today/";
-//    private static final String Test = "http://api.nbp.pl/api/exchangerates/rates/c/%s/today/";
-
+    private static final String NBP_API_URI = "http://api.nbp.pl/api/exchangerates/rates/c/usd/?format=json";
     private final HttpClient httpClient;
 
 
@@ -27,10 +25,10 @@ public class NbpHttpClient {
                 .build();
     }
 
-    public CurrencyDTO getNbpRates(String currency) throws BadRequestException {
+    public CurrencyDTO getNbpRates() throws BadRequestException {
         try {
             HttpRequest request = HttpRequest.newBuilder()
-                    .uri(new URI(String.format(NBP_API_URI, currency)))
+                    .uri(new URI(String.format(NBP_API_URI)))
                     .GET()
                     .build();
             HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());

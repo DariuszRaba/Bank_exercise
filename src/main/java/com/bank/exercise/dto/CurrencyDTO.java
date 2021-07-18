@@ -2,9 +2,10 @@ package com.bank.exercise.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonSetter;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
-
+@Component
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class CurrencyDTO {
     @JsonSetter("currency")

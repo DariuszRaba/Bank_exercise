@@ -4,6 +4,7 @@ import com.bank.exercise.dto.UserDto;
 import com.bank.exercise.exceptions.BadRequestException;
 import com.bank.exercise.exceptions.UserCreationException;
 import com.bank.exercise.fakeDB.BankDB;
+import com.bank.exercise.model.CurrencyExchanger;
 import com.bank.exercise.model.User;
 import com.bank.exercise.util.UserToUserDTO;
 import lombok.AllArgsConstructor;
