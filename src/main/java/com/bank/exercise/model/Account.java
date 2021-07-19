@@ -15,11 +15,12 @@ public abstract class Account {
     }
 
      public boolean addAmount(BigDecimal amount){
-        this.accAmount = accAmount.add(amount);
+        this.accAmount = accAmount.add(amount.abs());
         return true;
     }
 
-    protected boolean withdrawAmount(BigDecimal amount){
+    public boolean withdrawAmount(BigDecimal amount){
+        amount = amount.abs();
         if (checkBalance(amount)) {
             this.accAmount = accAmount.subtract(amount);
             return true;

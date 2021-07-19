@@ -35,8 +35,7 @@ public class UserService {
 
     public UserDto getUserInfo(String pesel) {
         User user = bankDB.getUser(pesel);
-        UserDto convert = userToUserDTO.convert(user);
-        return convert;
+        return userToUserDTO.convert(user);
     }
 
     private boolean checkIfUserOldEnough(String pesel) {
