@@ -16,7 +16,6 @@ public class SubAccService {
 
 
     public BigDecimal convertMoney(String pesel, String amount, String from, String convertTo) {
-
         UserDto userInfo = userService.getUserInfo(pesel);
         return from.equals(convertTo) ? BigDecimal.ZERO : currencyExchanger.convert(userInfo.getSubAccountUSD(), userInfo.getSubAccountPLN(), BigDecimal.valueOf(Long.parseLong(amount)), Currency.valueOf(convertTo.toUpperCase()));
     }

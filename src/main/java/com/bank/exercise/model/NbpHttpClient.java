@@ -28,7 +28,7 @@ public class NbpHttpClient {
     public CurrencyDTO getNbpRates() throws BadRequestException {
         try {
             HttpRequest request = HttpRequest.newBuilder()
-                    .uri(new URI(String.format(NBP_API_URI)))
+                    .uri(new URI(NBP_API_URI))
                     .GET()
                     .build();
             HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());

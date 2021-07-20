@@ -34,8 +34,9 @@ public class BankDB {
         return this.userMap.values().size();
     }
 
-    public void addUser(User user) {
+    public boolean addUser(User user) {
         this.userMap.put(user.getPesel(), user);
+        return true;
     }
 
     public User getUser(String pesel) {
