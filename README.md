@@ -10,6 +10,9 @@ User must have at least 18 years old and app checks it with provided pesel numbe
 **http://localhost:8080/user/info/{pesel}**<br/>
 Ex. http://localhost:8080/user/info/90060804123<br/>
 We can get user info by providing pesel of user that we are interested in.<br/>
+We get info about user and all related Accounts. <br/>
+![info](https://user-images.githubusercontent.com/57062542/127008630-9cab3f60-f2d7-41cd-b1a4-8145cfdf7cec.png)<br/>
+
 
 **http://localhost:8080/user/convert/{pesel}/{amount}/{from}/{convertTo}**<br/>
 Ex. http://localhost:8080/user/convert/90060804123/100//pln/usd<br/>
