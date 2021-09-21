@@ -2,9 +2,10 @@
 
 there are endpoints:
 
-**http://localhost:8080/user/create/{name}/{surname}/{pesel}** <br/>
-Ex. http://localhost:8080/user/create/Dariusz/Raba/03271944459<br/>
-We can creeate bank user Account with main Account in PLN and two subaccounts one in PLN and one in USD. <br/>
+**http://localhost:8080/user/create/** <br/>
+In order to create user you need to provide (name, surname, pesel) in request body as in the picture below.</br>
+![useCreationForm](https://user-images.githubusercontent.com/57062542/134228200-e0106aa9-0719-4f80-bada-87bdd3ae1016.png)
+We can create bank user Account with main Account in PLN and two subaccounts one in PLN and one in USD. <br/>
 User must have at least 18 years old and app checks it with provided pesel number.<br/>
 
 **http://localhost:8080/user/info/{pesel}**<br/>

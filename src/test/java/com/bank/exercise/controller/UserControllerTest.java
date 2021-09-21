@@ -1,10 +1,13 @@
 package com.bank.exercise.controller;
 
+import com.bank.exercise.model.UserCreationForm;
 import com.bank.exercise.service.UserServiceTest;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.web.WebAppConfiguration;
@@ -27,13 +30,14 @@ public class UserControllerTest {
     private MockMvc mvc;
 
     @BeforeEach
-    private void setUp(){
+    private void setUp() {
         mvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
     }
 
     @Test
     public void should_returned_201_status_code_from_user_creation() throws Exception {
-        MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.post("/user/create/Dariusz/Raba/90060812345")).andReturn();
+        final UserCreationForm userCreationForm = getsUserForm();
+        MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.post("/user/create/").contentType(MediaType.APPLICATION_JSON).content(new ObjectMapper().writeValueAsString(userCreationForm))).andReturn();
         int status = mvcResult.getResponse().getStatus();
 
         assertEquals(201, status);
@@ -55,13 +59,16 @@ public class UserControllerTest {
         MvcResult mvcResult2 = mvc.perform(MockMvcRequestBuilders.put("/user/convert/90060804123/10/usd/pln")).andReturn();
         final int status2 = mvcResult2.getResponse().getStatus();
 
-        assertAll(()-> assertEquals(200, status),
+        assertAll(() -> assertEquals(200, status),
                 () -> assertEquals(200, status2));
     }
 
     @Test
     public void should_returned_FORBIDDEN_status_code_from_under_age_user() throws Exception {
-        MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.post(String.format("/user/create/Dariusz/Raba/%s", UserServiceTest.getUnderAgePesel()))).andReturn();
+        final UserCreationForm userCreationForm = getsUserForm();
+        userCreationForm.setPesel(UserServiceTest.getUnderAgePesel());
+        MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.post("/user/create/").contentType(MediaType.APPLICATION_JSON)
+                .content(new ObjectMapper().writeValueAsString(userCreationForm))).andReturn();
         int status = mvcResult.getResponse().getStatus();
 
         assertEquals(403, status);
@@ -69,10 +76,18 @@ public class UserControllerTest {
 
     @Test
     public void should_returned_BAD_REQUEST_statdus_code_from_invalid_pesel() throws Exception {
-        MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.post("/user/create/Dariusz/Raba/900j0804123")).andReturn();
+        final UserCreationForm userCreationForm = getsUserForm();
+        userCreationForm.setPesel("900j0804123");
+
+        MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.post("/user/create/")
+                .contentType(MediaType.APPLICATION_JSON).content(new ObjectMapper().writeValueAsString(userCreationForm))).andReturn();
         int status = mvcResult.getResponse().getStatus();
 
         assertEquals(400, status);
+    }
+
+    private UserCreationForm getsUserForm() {
+        return new UserCreationForm("Marian", "Pazdzioch", "90060812345");
     }
 
 }

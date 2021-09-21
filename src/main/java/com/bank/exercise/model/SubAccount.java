@@ -1,6 +1,5 @@
 package com.bank.exercise.model;
 
-import java.math.BigDecimal;
 
 public class SubAccount extends Account {
 

@@ -2,6 +2,7 @@ package com.bank.exercise.controller;
 
 import com.bank.exercise.dto.UserDto;
 import com.bank.exercise.exceptions.UserCreationException;
+import com.bank.exercise.model.UserCreationForm;
 import com.bank.exercise.service.SubAccService;
 import com.bank.exercise.service.UserService;
 import lombok.AllArgsConstructor;
@@ -21,17 +22,15 @@ public class UserController {
     private UserService userService;
     private SubAccService subAccService;
 
-    @PostMapping("/create/{name}/{sureName}/{pesel}")
+    @PostMapping("/create/")
     @ResponseStatus(CREATED)
-    public void createUser(@PathVariable("name") String name,
-                           @PathVariable("sureName") String sureName,
-                           @PathVariable("pesel") String pesel) throws UserCreationException {
-        userService.createUser(name, sureName, pesel);
+    public void createUser(@RequestBody UserCreationForm userData) throws UserCreationException {
+        userService.createUser(userData);
     }
 
     @GetMapping(value = "/info/{pesel}", produces = APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
-    public UserDto getUserInfo(@PathVariable("pesel") String pesel){
+    public UserDto getUserInfo(@PathVariable("pesel") String pesel) {
         UserDto userInfo = userService.getUserInfo(pesel);
         return userInfo;
     }
@@ -41,7 +40,7 @@ public class UserController {
     public BigDecimal convertTo(@PathVariable("pesel") String pesel,
                                 @PathVariable("amount") String amount,
                                 @PathVariable("from") String from,
-                                @PathVariable("convertTo") String convertTo){
+                                @PathVariable("convertTo") String convertTo) {
         return subAccService.convertMoney(pesel, amount, from, convertTo);
     }
 }

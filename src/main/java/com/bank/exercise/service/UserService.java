@@ -5,6 +5,7 @@ import com.bank.exercise.exceptions.BadRequestException;
 import com.bank.exercise.exceptions.UserCreationException;
 import com.bank.exercise.fakeDB.BankDB;
 import com.bank.exercise.model.User;
+import com.bank.exercise.model.UserCreationForm;
 import com.bank.exercise.util.UserToUserDTO;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -24,9 +25,9 @@ public class UserService {
     private UserToUserDTO userToUserDTO;
 
 
-    public boolean createUser(String name, String sureName, String pesel) throws UserCreationException {
-        if (checkIfUserOldEnough(pesel)) {
-          return bankDB.addUser(new User(name, sureName, pesel));
+    public boolean createUser(UserCreationForm data) throws UserCreationException {
+        if (checkIfUserOldEnough(data.getPesel())) {
+          return bankDB.addUser(new User(data.getName(), data.getSurName(), data.getPesel()));
         } else {
             throw new UserCreationException();
         }
